@@ -1,0 +1,15 @@
+com\summarease\app\MainApp.class
+com\summarease\strategy\ApiBasedSummarizer.class
+com\summarease\controller\MainController.class
+com\summarease\service\SummarizerStrategy.class
+com\summarease\strategy\Summarizer.class
+com\summarease\util\TextValidator.class
+com\summarease\model\UserPreferences.class
+com\summarease\util\FileExporter.class
+com\summarease\util\SummaryFormatter.class
+com\summarease\data\SummaryRecord.class
+com\summarease\service\SummaryService$Method.class
+com\summarease\strategy\RuleBasedSummarizer.class
+com\summarease\service\SummaryService.class
+com\summarease\model\SummaryRecord.class
+com\summarease\data\SummaryHistoryManager.class
