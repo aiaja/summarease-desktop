@@ -7,6 +7,7 @@
     <groupId>org.example</groupId>
     <artifactId>SummarEase</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
 
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
@@ -84,20 +85,21 @@
     </dependencies>
     
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-                <version>3.1.0</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>java</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
+<build>
+    <plugins>
+        <plugin>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-maven-plugin</artifactId>
+            <version>0.0.8</version>
+            <configuration>
+                <mainClass>com.summarease.app.MainApp</mainClass>
+                <modules>
+                    <module>javafx.controls</module>
+                    <module>javafx.fxml</module>
+                </modules>
+            </configuration>
+        </plugin>
+    </plugins>
+</build>
+
 </project>

@@ -1,13 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
 
 <AnchorPane xmlns="http://javafx.com/javafx/8.0.171"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.summarease.controller.MainController">
+    <VBox spacing="10.0" alignment="CENTER" AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
+        <Label text="SummarEase" style="-fx-font-size: 18px; -fx-font-weight: bold;" />
+        <TextArea fx:id="inputTextArea" promptText="Masukkan teks di sini..." prefRowCount="5"/>
+        <ComboBox fx:id="methodDropdown" promptText="Pilih metode ringkasan"/>
+        <Button text="Ringkas" onAction="#onSummarizeClicked"/>
+        <TextArea fx:id="outputTextArea" promptText="Hasil ringkasan..." prefRowCount="5" editable="false"/>
+        <Button text="Simpan" onAction="#onSaveClicked"/>
+    </VBox>
 </AnchorPane>
-
-<VBox fx:id="root" spacing="10.0" xmlns="http://javafx.com/javafx"
-      xmlns:fx="http://javafx.com/fxml" alignment="CENTER">
-    <Button text="Ringkas" styleClass="button"/>
-</VBox>

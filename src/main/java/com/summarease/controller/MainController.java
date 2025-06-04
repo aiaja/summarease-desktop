@@ -1,4 +1,5 @@
 package com.summarease.controller;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.ComboBox;
@@ -14,11 +15,10 @@ import com.summarease.util.FileExporter;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-
-
 public class MainController {
-    
+
     private Stage stage;
+
     public void setStage(Stage stage) {
         this.stage = stage;
     }
@@ -31,9 +31,12 @@ public class MainController {
     @FXML
     private ComboBox<String> methodDropdown;
 
+    @FXML
+    public void initialize() {
+        methodDropdown.getItems().addAll("Rule Based", "API based");
+    }
+
     private final SummaryHistoryManager historyManager = new SummaryHistoryManager();
-
-
 
     private Summarizer summarizer;
 
@@ -44,7 +47,19 @@ public class MainController {
     @FXML
     private void onSummarizeClicked() {
         String input = inputTextArea.getText();
-        String result = summarizer.summarize(input);
+        String selectedMethod = methodDropdown.getValue();
+        String result = "";
+
+        if ("Rule Based".equals(selectedMethod)) {
+            summarizer = new com.summarease.strategy.RuleBasedSummarizer();
+        } else if ("API based".equals(selectedMethod)) {
+            summarizer = new com.summarease.strategy.ApiBasedSummarizer();
+        } else {
+            outputTextArea.setText("Please select a summarization method.");
+            return;
+        }
+
+        result = summarizer.summarize(input);
         outputTextArea.setText(result);
     }
 
@@ -68,4 +83,3 @@ public class MainController {
         }
     }
 }
-
