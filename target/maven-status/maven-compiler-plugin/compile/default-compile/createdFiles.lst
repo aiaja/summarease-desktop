@@ -1,3 +1,4 @@
+com\summarease\util\HttpClientHelper.class
 com\summarease\app\MainApp.class
 com\summarease\strategy\ApiBasedSummarizer.class
 com\summarease\controller\MainController.class

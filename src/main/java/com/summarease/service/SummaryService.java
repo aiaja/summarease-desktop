@@ -2,15 +2,12 @@ package com.summarease.service;
 
 import com.summarease.strategy.*;
 
-
 public class SummaryService {
-
 
     public enum Method {
         RULE_BASED,
         API_BASED
     }
-    
 
     private final Summarizer ruleBasedSummarizer;
     private final Summarizer apiBasedSummarizer;
@@ -32,19 +29,12 @@ public class SummaryService {
     }
 
     public Summarizer getSummarizer(String method) {
-        if ("Rule-Based".equalsIgnoreCase(method)) {
+        if ("Rule Based".equalsIgnoreCase(method)) {
             return ruleBasedSummarizer;
-        } else if ("API-Based".equalsIgnoreCase(method)) {
+        } else if ("API based".equalsIgnoreCase(method)) {
             return apiBasedSummarizer;
         } else {
             throw new IllegalArgumentException("Unsupported summarization method: " + method);
         }
     }
-
-    public void setSummarizer(Object object) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setSummarizer'");
-    }
-
-    
 }

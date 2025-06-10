@@ -10,5 +10,6 @@ D:\.PORTOFOLIO\10.SummarEase\summarease-desktop\src\main\java\com\summarease\str
 D:\.PORTOFOLIO\10.SummarEase\summarease-desktop\src\main\java\com\summarease\strategy\RuleBasedSummarizer.java
 D:\.PORTOFOLIO\10.SummarEase\summarease-desktop\src\main\java\com\summarease\strategy\Summarizer.java
 D:\.PORTOFOLIO\10.SummarEase\summarease-desktop\src\main\java\com\summarease\util\FileExporter.java
+D:\.PORTOFOLIO\10.SummarEase\summarease-desktop\src\main\java\com\summarease\util\HttpClientHelper.java
 D:\.PORTOFOLIO\10.SummarEase\summarease-desktop\src\main\java\com\summarease\util\SummaryFormatter.java
 D:\.PORTOFOLIO\10.SummarEase\summarease-desktop\src\main\java\com\summarease\util\TextValidator.java
