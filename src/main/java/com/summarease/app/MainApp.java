@@ -16,23 +16,31 @@ public class MainApp extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         // Load FXML
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/summarease/view/main_view.fxml"));
+        var fxmlUrl = getClass().getResource("/com/summarease/view/main_view.fxml");
+        if (fxmlUrl == null) {
+            throw new IllegalStateException("FXML file not found: /com/summarease/view/main_view.fxml");
+        }
+        FXMLLoader loader = new FXMLLoader(fxmlUrl);
         Parent root = loader.load();
 
         UserPreferences preferences = new UserPreferences();
 
-        Summarizer summarizer = preferences.getDefaultMethod().equals("rule")
+        Summarizer summarizer = "rule".equals(preferences.getDefaultMethod())
                 ? new RuleBasedSummarizer()
                 : new ApiBasedSummarizer();
-
 
         // Kirim summarizer ke controller
         MainController controller = loader.getController();
         controller.setSummarizer(summarizer);
 
-        //Tambahkan CSS
+        // Tambahkan CSS
         Scene scene = new Scene(root);
-        scene.getStylesheets().add(getClass().getResource("/com/summarease/style/main.css").toExternalForm());
+        var cssUrl = getClass().getResource("/com/summarease/style/main.css");
+        if (cssUrl != null) {
+            scene.getStylesheets().add(cssUrl.toExternalForm());
+        } else {
+            System.err.println("Warning: CSS file not found: /com/summarease/style/main.css");
+        }
 
         primaryStage.setScene(scene);
         primaryStage.setTitle("Summarease");

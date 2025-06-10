@@ -6,9 +6,8 @@ import java.util.Properties;
 
 
 public class UserPreferences {
-    private static final String CONFIG_PATH = "/com/summarease/config.properties";
-
     private final Properties properties = new Properties();
+    private static final String CONFIG_PATH = "/config.properties";
 
     public UserPreferences() {
         try (InputStream input = getClass().getResourceAsStream(CONFIG_PATH)) {

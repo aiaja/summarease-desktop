@@ -9,6 +9,7 @@ import java.io.IOException;
 
 import com.summarease.data.SummaryHistoryManager;
 import com.summarease.model.SummaryRecord;
+import com.summarease.service.SummaryService;
 import com.summarease.strategy.Summarizer;
 import com.summarease.util.FileExporter;
 
@@ -23,6 +24,9 @@ public class MainController {
         this.stage = stage;
     }
 
+    private final SummaryService summaryService = new SummaryService();
+
+    @FXML
     private TextArea inputTextArea;
 
     @FXML
@@ -48,37 +52,70 @@ public class MainController {
     private void onSummarizeClicked() {
         String input = inputTextArea.getText();
         String selectedMethod = methodDropdown.getValue();
-        String result = "";
 
-        if ("Rule Based".equals(selectedMethod)) {
-            summarizer = new com.summarease.strategy.RuleBasedSummarizer();
-        } else if ("API based".equals(selectedMethod)) {
-            summarizer = new com.summarease.strategy.ApiBasedSummarizer();
-        } else {
+        if (input == null || input.trim().isEmpty()) {
+            outputTextArea.setText("Input text cannot be empty.");
+            return;
+        }
+
+        if (selectedMethod == null) {
             outputTextArea.setText("Please select a summarization method.");
             return;
         }
 
-        result = summarizer.summarize(input);
-        outputTextArea.setText(result);
+        try {
+            String result;
+            if ("Rule Based".equals(selectedMethod)) {
+                result = summaryService.summarize(input, SummaryService.Method.RULE_BASED);
+            } else if ("API based".equals(selectedMethod)) {
+                // print the text
+                result = summaryService.summarize(input, SummaryService.Method.API_BASED);
+            } else {
+                outputTextArea.setText("Invalid summarization method selected.");
+                return;
+            }
+            // res = [{"summary_text":"the afasfaffa is a fada based in syria . it is based
+
+            outputTextArea.setText(result);
+
+            historyManager.addRecord(new SummaryRecord(input, result));
+        } catch (Exception e) {
+            outputTextArea.setText("An error occurred during summarization: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     @FXML
     private void onSaveClicked() {
-        FileChooser fileChooser = new FileChooser(); // Initialize FileChooser
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Save Summary");
+        fileChooser.getExtensionFilters().addAll(
+            new FileChooser.ExtensionFilter("Text Files (*.txt)", "*.txt"),
+            new FileChooser.ExtensionFilter("PDF Files (*.pdf)", "*.pdf")
+        );
         File file = fileChooser.showSaveDialog(stage);
         if (file == null) {
             return;
         }
+
         java.util.List<SummaryRecord> history = historyManager.getHistory();
         if (history.isEmpty()) {
+            outputTextArea.setText("No summary to save.");
             return;
         }
         SummaryRecord lastRecord = history.get(history.size() - 1);
 
+        String fileName = file.getName().toLowerCase();
         try {
-            FileExporter.exportAsTxt(lastRecord, file);
+            if (fileName.endsWith(".txt")) {
+                FileExporter.exportAsTxt(lastRecord, file);
+            } else if (fileName.endsWith(".pdf")) {
+                FileExporter.exportAsPdf(lastRecord, file);
+            } else {
+                outputTextArea.setText("Unsupported file format selected.");
+            }
         } catch (IOException e) {
+            outputTextArea.setText("Failed to save file: " + e.getMessage());
             e.printStackTrace();
         }
     }

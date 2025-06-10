@@ -12,10 +12,10 @@
             fx:controller="com.summarease.controller.MainController">
     <VBox spacing="10.0" alignment="CENTER" AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
         <Label text="SummarEase" style="-fx-font-size: 18px; -fx-font-weight: bold;" />
-        <TextArea fx:id="inputTextArea" promptText="Masukkan teks di sini..." prefRowCount="5"/>
+        <TextArea fx:id="inputTextArea" wrapText="true" promptText="Masukkan teks di sini..." prefRowCount="5"/>
         <ComboBox fx:id="methodDropdown" promptText="Pilih metode ringkasan"/>
         <Button text="Ringkas" onAction="#onSummarizeClicked"/>
-        <TextArea fx:id="outputTextArea" promptText="Hasil ringkasan..." prefRowCount="5" editable="false"/>
+        <TextArea fx:id="outputTextArea" wrapText="true" promptText="Hasil ringkasan..." prefRowCount="5" editable="false"/>
         <Button text="Simpan" onAction="#onSaveClicked"/>
     </VBox>
 </AnchorPane>
