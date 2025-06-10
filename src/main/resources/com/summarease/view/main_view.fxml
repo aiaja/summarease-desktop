@@ -2,20 +2,50 @@
 
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.control.Tooltip?>
 
 <AnchorPane xmlns="http://javafx.com/javafx/8.0.171"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.summarease.controller.MainController">
-    <VBox spacing="10.0" alignment="CENTER" AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
-        <Label text="SummarEase" style="-fx-font-size: 18px; -fx-font-weight: bold;" />
-        <TextArea fx:id="inputTextArea" wrapText="true" promptText="Masukkan teks di sini..." prefRowCount="5"/>
-        <ComboBox fx:id="methodDropdown" promptText="Pilih metode ringkasan"/>
-        <Button text="Ringkas" onAction="#onSummarizeClicked"/>
-        <TextArea fx:id="outputTextArea" wrapText="true" promptText="Hasil ringkasan..." prefRowCount="5" editable="false"/>
-        <Button text="Simpan" onAction="#onSaveClicked"/>
+    <VBox spacing="18.0" alignment="CENTER" style="-fx-padding: 32; -fx-background-color: #f9f9f9;" AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
+        <Label text="SummarEase" style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: #2d415a;" />
+        <Separator />
+        <Label text="Teks Asli:" style="-fx-font-weight: bold; -fx-font-size: 14px;" />
+        <TextArea fx:id="inputTextArea" wrapText="true" promptText="Input Text Here..." prefRowCount="7" style="-fx-font-size: 13px;"/>
+        <HBox spacing="16.0" alignment="CENTER_LEFT">
+            <Label text="Method:" style="-fx-font-size: 13px;"/>
+            <ComboBox fx:id="methodDropdown" promptText="Select Method" style="-fx-pref-width: 200;"/>
+        </HBox>
+        <HBox spacing="12.0" alignment="CENTER">
+            <Button text="Summarize" onAction="#onSummarizeClicked" style="-fx-background-color: #4caf50; -fx-text-fill: white; -fx-font-weight: bold;"/>
+            <ProgressIndicator fx:id="progressIndicator" visible="false" maxWidth="28" maxHeight="28"/>
+        </HBox>
+        <Separator />
+        <Label text="Summary:" style="-fx-font-weight: bold; -fx-font-size: 14px;" />
+        <TextArea fx:id="outputTextArea" wrapText="true" promptText="Summary..." prefRowCount="7" editable="false" style="-fx-font-size: 13px;"/>
+        <HBox spacing="10.0" alignment="CENTER_RIGHT">
+            <Button text="Export Summary" onAction="#onSaveClicked" style="-fx-background-color: #2196f3; -fx-text-fill: white; -fx-font-weight: bold;">
+                <tooltip>
+                    <Tooltip text="Export Summary to File"/>
+                </tooltip>
+            </Button>
+            <Button text="History" onAction="#onHistoryClicked" style="-fx-background-color: #ff9800; -fx-text-fill: white; -fx-font-weight: bold;">
+                <tooltip>
+                    <Tooltip text="View History"/>
+                </tooltip>
+            </Button>
+            <Button text="Clear History" onAction="#onClearClicked" style="-fx-background-color: #f44336; -fx-text-fill: white; -fx-font-weight: bold;">
+                <tooltip>
+                    <Tooltip text="Clear All Data"/>
+                </tooltip>
+            </Button>
+        </HBox>
     </VBox>
 </AnchorPane>

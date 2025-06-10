@@ -119,4 +119,32 @@ public class MainController {
             e.printStackTrace();
         }
     }
+
+   @FXML
+private void onHistoryClicked() {
+    java.util.List<SummaryRecord> history = historyManager.getHistory();
+    if (history.isEmpty()) {
+        outputTextArea.setText("No history available.");
+        return;
+    }
+    StringBuilder historyText = new StringBuilder();
+    int count = 1;
+    for (SummaryRecord record : history) {
+        historyText.append("Record ").append(count++).append(":\n")
+                   .append("Date: ").append(record.getTimestamp()).append("\n")
+                   .append("Original Text:\n").append(record.getOriginalText()).append("\n")
+                   .append("Summary:\n").append(record.getSummarizedText()).append("\n")
+                   .append("-----\n");
+    }
+    outputTextArea.setText(historyText.toString());
+}
+
+    @FXML
+    private void onClearClicked() {
+        inputTextArea.clear();
+        outputTextArea.clear();
+        methodDropdown.getSelectionModel().clearSelection();
+        historyManager.clearHistory();
+        outputTextArea.setText("History cleared.");
+    }
 }
