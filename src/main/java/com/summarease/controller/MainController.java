@@ -77,6 +77,8 @@ public class MainController {
             // res = [{"summary_text":"the afasfaffa is a fada based in syria . it is based
 
             outputTextArea.setText(result);
+
+            historyManager.addRecord(new SummaryRecord(input, result));
         } catch (Exception e) {
             outputTextArea.setText("An error occurred during summarization: " + e.getMessage());
             e.printStackTrace();
@@ -85,20 +87,35 @@ public class MainController {
 
     @FXML
     private void onSaveClicked() {
-        FileChooser fileChooser = new FileChooser(); // Initialize FileChooser
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Save Summary");
+        fileChooser.getExtensionFilters().addAll(
+            new FileChooser.ExtensionFilter("Text Files (*.txt)", "*.txt"),
+            new FileChooser.ExtensionFilter("PDF Files (*.pdf)", "*.pdf")
+        );
         File file = fileChooser.showSaveDialog(stage);
         if (file == null) {
             return;
         }
+
         java.util.List<SummaryRecord> history = historyManager.getHistory();
         if (history.isEmpty()) {
+            outputTextArea.setText("No summary to save.");
             return;
         }
         SummaryRecord lastRecord = history.get(history.size() - 1);
 
+        String fileName = file.getName().toLowerCase();
         try {
-            FileExporter.exportAsTxt(lastRecord, file);
+            if (fileName.endsWith(".txt")) {
+                FileExporter.exportAsTxt(lastRecord, file);
+            } else if (fileName.endsWith(".pdf")) {
+                FileExporter.exportAsPdf(lastRecord, file);
+            } else {
+                outputTextArea.setText("Unsupported file format selected.");
+            }
         } catch (IOException e) {
+            outputTextArea.setText("Failed to save file: " + e.getMessage());
             e.printStackTrace();
         }
     }

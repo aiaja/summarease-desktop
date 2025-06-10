@@ -8,7 +8,6 @@ com\summarease\util\TextValidator.class
 com\summarease\model\UserPreferences.class
 com\summarease\util\FileExporter.class
 com\summarease\util\SummaryFormatter.class
-com\summarease\data\SummaryRecord.class
 com\summarease\service\SummaryService$Method.class
 com\summarease\strategy\RuleBasedSummarizer.class
 com\summarease\service\SummaryService.class
