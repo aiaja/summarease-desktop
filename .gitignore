@@ -1,0 +1,19 @@
+# .gitignore for Java/Maven projects
+
+# Maven target directory
+/target/
+
+# IDE files
+/.idea/
+/*.iml
+*.class
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Sensitive config files
+config.properties
