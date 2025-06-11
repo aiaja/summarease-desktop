@@ -17,19 +17,27 @@
     <VBox spacing="18.0" alignment="CENTER" style="-fx-padding: 32; -fx-background-color: #f9f9f9;" AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
         <Label text="SummarEase" style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: #2d415a;" />
         <Separator />
-        <Label text="Teks Asli:" style="-fx-font-weight: bold; -fx-font-size: 14px;" />
-        <TextArea fx:id="inputTextArea" wrapText="true" promptText="Input Text Here..." prefRowCount="7" style="-fx-font-size: 13px;"/>
-        <HBox spacing="16.0" alignment="CENTER_LEFT">
-            <Label text="Method:" style="-fx-font-size: 13px;"/>
-            <ComboBox fx:id="methodDropdown" promptText="Select Method" style="-fx-pref-width: 200;"/>
-        </HBox>
-        <HBox spacing="12.0" alignment="CENTER">
-            <Button text="Summarize" onAction="#onSummarizeClicked" style="-fx-background-color: #4caf50; -fx-text-fill: white; -fx-font-weight: bold;"/>
-            <ProgressIndicator fx:id="progressIndicator" visible="false" maxWidth="28" maxHeight="28"/>
+        <HBox spacing="24.0" alignment="TOP_CENTER">
+            <VBox spacing="8.0" alignment="TOP_LEFT">
+                <Label text="Original Text:" style="-fx-font-weight: bold; -fx-font-size: 14px;" />
+                <TextArea fx:id="inputTextArea" wrapText="true" promptText="Input Text Here..." prefRowCount="7" style="-fx-font-size: 13px;"/>
+            </VBox>
+            <VBox spacing="8.0" alignment="TOP_LEFT">
+                <Label text="Result:" style="-fx-font-weight: bold; -fx-font-size: 14px;" />
+                <TextArea fx:id="outputTextArea" wrapText="true" promptText="Result Summary..." prefRowCount="7" editable="false" style="-fx-font-size: 13px;"/>
+                <HBox spacing="16.0" alignment="CENTER_RIGHT">
+                    <Label text="Method:" style="-fx-font-size: 13px;"/>
+                    <ComboBox fx:id="methodDropdown" promptText="Select Method" style="-fx-pref-width: 200;"/>
+                    <Button text="Summarize" onAction="#onSummarizeClicked" style="-fx-background-color: #4caf50; -fx-text-fill: white; -fx-font-weight: bold;"/>
+                    <ProgressIndicator fx:id="progressIndicator" visible="false" maxWidth="28" maxHeight="28"/>
+                </HBox>
+            </VBox>
         </HBox>
         <Separator />
-        <Label text="Summary:" style="-fx-font-weight: bold; -fx-font-size: 14px;" />
-        <TextArea fx:id="outputTextArea" wrapText="true" promptText="Summary..." prefRowCount="7" editable="false" style="-fx-font-size: 13px;"/>
+        <Label text="Preview" style="-fx-font-weight: bold; -fx-font-size: 15px; -fx-alignment: center;" />
+        <TextArea fx:id="previewTextArea" wrapText="true" promptText="Preview ..." prefRowCount="6"
+                  editable="false" style="-fx-font-size: 13px; -fx-background-color: #f8fcff;"/>
+        
         <HBox spacing="10.0" alignment="CENTER_RIGHT">
             <Button text="Export Summary" onAction="#onSaveClicked" style="-fx-background-color: #2196f3; -fx-text-fill: white; -fx-font-weight: bold;">
                 <tooltip>

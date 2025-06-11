@@ -33,6 +33,9 @@ public class MainController {
     private TextArea outputTextArea;
 
     @FXML
+    private TextArea previewTextArea;
+
+    @FXML
     private ComboBox<String> methodDropdown;
 
     @FXML
@@ -54,12 +57,12 @@ public class MainController {
         String selectedMethod = methodDropdown.getValue();
 
         if (input == null || input.trim().isEmpty()) {
-            outputTextArea.setText("Input text cannot be empty.");
+            previewTextArea.setText("Input text cannot be empty.");
             return;
         }
 
         if (selectedMethod == null) {
-            outputTextArea.setText("Please select a summarization method.");
+            previewTextArea.setText("Please select a summarization method.");
             return;
         }
 
@@ -71,16 +74,21 @@ public class MainController {
                 // print the text
                 result = summaryService.summarize(input, SummaryService.Method.API_BASED);
             } else {
-                outputTextArea.setText("Invalid summarization method selected.");
+                previewTextArea.setText("Invalid summarization method selected.");
                 return;
             }
             // res = [{"summary_text":"the afasfaffa is a fada based in syria . it is based
 
             outputTextArea.setText(result);
 
-            historyManager.addRecord(new SummaryRecord(input, result));
+            SummaryRecord record = new SummaryRecord(input, result);
+            historyManager.addRecord(record);
+
+            // Show formatted preview
+            previewTextArea.setText(com.summarease.util.SummaryFormatter.formatForExport(record));
+
         } catch (Exception e) {
-            outputTextArea.setText("An error occurred during summarization: " + e.getMessage());
+            previewTextArea.setText("An error occurred during summarization: " + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -90,9 +98,8 @@ public class MainController {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Save Summary");
         fileChooser.getExtensionFilters().addAll(
-            new FileChooser.ExtensionFilter("Text Files (*.txt)", "*.txt"),
-            new FileChooser.ExtensionFilter("PDF Files (*.pdf)", "*.pdf")
-        );
+                new FileChooser.ExtensionFilter("Text Files (*.txt)", "*.txt"),
+                new FileChooser.ExtensionFilter("PDF Files (*.pdf)", "*.pdf"));
         File file = fileChooser.showSaveDialog(stage);
         if (file == null) {
             return;
@@ -100,7 +107,7 @@ public class MainController {
 
         java.util.List<SummaryRecord> history = historyManager.getHistory();
         if (history.isEmpty()) {
-            outputTextArea.setText("No summary to save.");
+            previewTextArea.setText("No summary to save.");
             return;
         }
         SummaryRecord lastRecord = history.get(history.size() - 1);
@@ -112,39 +119,40 @@ public class MainController {
             } else if (fileName.endsWith(".pdf")) {
                 FileExporter.exportAsPdf(lastRecord, file);
             } else {
-                outputTextArea.setText("Unsupported file format selected.");
+                previewTextArea.setText("Unsupported file format selected.");
             }
         } catch (IOException e) {
-            outputTextArea.setText("Failed to save file: " + e.getMessage());
+            previewTextArea.setText("Failed to save file: " + e.getMessage());
             e.printStackTrace();
         }
     }
 
-   @FXML
-private void onHistoryClicked() {
-    java.util.List<SummaryRecord> history = historyManager.getHistory();
-    if (history.isEmpty()) {
-        outputTextArea.setText("No history available.");
-        return;
+    @FXML
+    private void onHistoryClicked() {
+        java.util.List<SummaryRecord> history = historyManager.getHistory();
+        if (history.isEmpty()) {
+            previewTextArea.setText("No history available.");
+            return;
+        }
+        StringBuilder historyText = new StringBuilder();
+        int count = 1;
+        for (SummaryRecord record : history) {
+            historyText.append("Record ").append(count++).append(":\n")
+                    .append("Date: ").append(record.getTimestamp()).append("\n")
+                    .append("Original Text:\n").append(record.getOriginalText()).append("\n")
+                    .append("Summary:\n").append(record.getSummarizedText()).append("\n")
+                    .append("-----\n");
+        }
+        previewTextArea.setText(historyText.toString());
     }
-    StringBuilder historyText = new StringBuilder();
-    int count = 1;
-    for (SummaryRecord record : history) {
-        historyText.append("Record ").append(count++).append(":\n")
-                   .append("Date: ").append(record.getTimestamp()).append("\n")
-                   .append("Original Text:\n").append(record.getOriginalText()).append("\n")
-                   .append("Summary:\n").append(record.getSummarizedText()).append("\n")
-                   .append("-----\n");
-    }
-    outputTextArea.setText(historyText.toString());
-}
 
     @FXML
     private void onClearClicked() {
         inputTextArea.clear();
+        previewTextArea.clear();
         outputTextArea.clear();
         methodDropdown.getSelectionModel().clearSelection();
         historyManager.clearHistory();
-        outputTextArea.setText("History cleared.");
+        previewTextArea.setText("History cleared.");
     }
 }
