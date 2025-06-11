@@ -17,26 +17,25 @@
     <VBox spacing="18.0" alignment="CENTER" style="-fx-padding: 32; -fx-background-color: #f9f9f9;" AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
         <Label text="SummarEase" style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: #2d415a;" />
         <Separator />
-        <HBox spacing="24.0" alignment="TOP_CENTER">
-            <VBox spacing="8.0" alignment="TOP_LEFT">
+        <HBox spacing="24.0" alignment="TOP_CENTER" prefWidth="1000.0" maxWidth="Infinity">
+            <VBox spacing="8.0" alignment="TOP_LEFT" HBox.hgrow="ALWAYS">
                 <Label text="Original Text:" style="-fx-font-weight: bold; -fx-font-size: 14px;" />
                 <TextArea fx:id="inputTextArea" wrapText="true" promptText="Input Text Here..." prefRowCount="7" style="-fx-font-size: 13px;"/>
             </VBox>
-            <VBox spacing="8.0" alignment="TOP_LEFT">
+            <VBox spacing="8.0" alignment="TOP_LEFT" HBox.hgrow="ALWAYS">
                 <Label text="Result:" style="-fx-font-weight: bold; -fx-font-size: 14px;" />
                 <TextArea fx:id="outputTextArea" wrapText="true" promptText="Result Summary..." prefRowCount="7" editable="false" style="-fx-font-size: 13px;"/>
                 <HBox spacing="16.0" alignment="CENTER_RIGHT">
                     <Label text="Method:" style="-fx-font-size: 13px;"/>
                     <ComboBox fx:id="methodDropdown" promptText="Select Method" style="-fx-pref-width: 200;"/>
-                    <Button text="Summarize" onAction="#onSummarizeClicked" style="-fx-background-color: #4caf50; -fx-text-fill: white; -fx-font-weight: bold;"/>
+                    <Button text="Summarize" onAction="#onSummarizeClicked" style="-fx-background-color: #2196f3; -fx-text-fill: white; -fx-font-weight: bold;"/>
                     <ProgressIndicator fx:id="progressIndicator" visible="false" maxWidth="28" maxHeight="28"/>
                 </HBox>
             </VBox>
         </HBox>
         <Separator />
         <Label text="Preview" style="-fx-font-weight: bold; -fx-font-size: 15px; -fx-alignment: center;" />
-        <TextArea fx:id="previewTextArea" wrapText="true" promptText="Preview ..." prefRowCount="6"
-                  editable="false" style="-fx-font-size: 13px; -fx-background-color: #f8fcff;"/>
+        <TextArea fx:id="previewTextArea" wrapText="true" promptText="Preview..." editable="false" prefRowCount="7" style="-fx-font-size: 13px;"  VBox.vgrow="ALWAYS" maxWidth="Infinity"/>
         
         <HBox spacing="10.0" alignment="CENTER_RIGHT">
             <Button text="Export Summary" onAction="#onSaveClicked" style="-fx-background-color: #2196f3; -fx-text-fill: white; -fx-font-weight: bold;">
@@ -44,12 +43,12 @@
                     <Tooltip text="Export Summary to File"/>
                 </tooltip>
             </Button>
-            <Button text="History" onAction="#onHistoryClicked" style="-fx-background-color: #ff9800; -fx-text-fill: white; -fx-font-weight: bold;">
+            <Button text="History" onAction="#onHistoryClicked" style="-fx-background-color: #2196f3; -fx-text-fill: white; -fx-font-weight: bold;">
                 <tooltip>
                     <Tooltip text="View History"/>
                 </tooltip>
             </Button>
-            <Button text="Clear History" onAction="#onClearClicked" style="-fx-background-color: #f44336; -fx-text-fill: white; -fx-font-weight: bold;">
+            <Button text="Clear History" onAction="#onClearClicked" style="-fx-background-color: #2196f3; -fx-text-fill: white; -fx-font-weight: bold;">
                 <tooltip>
                     <Tooltip text="Clear All Data"/>
                 </tooltip>
