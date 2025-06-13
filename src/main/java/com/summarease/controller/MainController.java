@@ -13,6 +13,8 @@ import com.summarease.service.SummaryService;
 import com.summarease.strategy.Summarizer;
 import com.summarease.util.FileExporter;
 
+import com.summarease.util.HistoryJsonUtil;
+
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -41,6 +43,10 @@ public class MainController {
     @FXML
     public void initialize() {
         methodDropdown.getItems().addAll("Rule Based", "API based");
+
+        // Load history dari file JSON saat aplikasi start
+        java.util.List<SummaryRecord> loaded = com.summarease.util.HistoryJsonUtil.loadHistory();
+        loaded.forEach(historyManager::addRecord);
     }
 
     private final SummaryHistoryManager historyManager = new SummaryHistoryManager();
@@ -83,6 +89,9 @@ public class MainController {
 
             SummaryRecord record = new SummaryRecord(input, result);
             historyManager.addRecord(record);
+
+            // Simpan ke JSON
+            HistoryJsonUtil.saveHistory(historyManager.getHistory());
 
             // Show formatted preview
             previewTextArea.setText(com.summarease.util.SummaryFormatter.formatForExport(record));
@@ -129,7 +138,7 @@ public class MainController {
 
     @FXML
     private void onHistoryClicked() {
-        java.util.List<SummaryRecord> history = historyManager.getHistory();
+        java.util.List<SummaryRecord> history = com.summarease.util.HistoryJsonUtil.loadHistory();
         if (history.isEmpty()) {
             previewTextArea.setText("No history available.");
             return;
